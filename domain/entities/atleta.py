@@ -7,5 +7,5 @@ class Atleta (Utente):
         super().__init__(nome, cognome, sesso, nascita, codice_fiscale, via, civico, citta,
                          provincia, cap)
 
-    def getRuolo(self):
+    def get_ruolo(self):
         return "atleta"
