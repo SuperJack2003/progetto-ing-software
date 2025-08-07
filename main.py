@@ -1,5 +1,5 @@
-from domain.entities.allenatore import Allenatore
-from domain.entities.atleta import Atleta
+from domain.attività.allenatore import Allenatore
+from domain.attività.atleta import Atleta
 
 
 def main():

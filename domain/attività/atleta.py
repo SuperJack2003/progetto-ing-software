@@ -1,4 +1,4 @@
-from domain.entities.utente import Utente
+from domain.attività.utente import Utente
 
 class Atleta (Utente):
     def __init__(self, nome: str, cognome: str, sesso: chr, nascita: str,
