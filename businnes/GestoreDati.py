@@ -11,10 +11,14 @@ from domain.attività.contratto_abbonamento import ContrattoAbbonamento
 from domain.attività.contratto_atleta_allenatore import ContrattoAtletaAllenatore
 from domain.attività.contratto_allenatore_corso import ContrattoAllenatoreCorso
 
+from businnes.GestoreAtleti import GestoreAtleti
+from businnes.GestoreAllenatori import GestoreAllenatore
+
 cartella_dati = Path(__file__).parent.parent / 'data'
 cartella_dati.mkdir(parents=True, exist_ok=True)
 
-def carica_dati():
+def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllenatore, gestore_abbonamenti,
+                gestore_corsi, gestore_schede, gestore_notifiche):
     try:
         with open(cartella_dati / 'utenti.pkl', 'rb') as f:
             print ("Caricamento utenti...")
@@ -29,6 +33,9 @@ def carica_dati():
 
                 elif isinstance(utente, Allenatore):
                     lista_allenatori.append(utente)
+
+            gestore_atleti.set_lista_atleti(lista_atleti)
+            gestore_allenatori.set_lista_allenatori(lista_allenatori)
 
         with open(cartella_dati / 'abbonamenti.pkl', 'rb') as f:
             print ("Caricamento abbonamenti...")

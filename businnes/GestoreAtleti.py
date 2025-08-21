@@ -44,5 +44,10 @@ class GestoreAtleti:
                  codice_fiscale: str = None, via: str= None, civico: int= None,
                  citta: str= None, provincia: str= None, cap: int= None,
                  telefono: str= None, email: str= None):
-        atleta = Atleta(nome, cognome, sesso, nascita, codice_fiscale, via, civico,citta, provincia, cap, telefono, email)
-        self._lista_atleti.append(atleta)
+
+        if not self.controllo_email(email) and not self.controllo_tel(telefono):
+            atleta = Atleta(nome, cognome, sesso, nascita, codice_fiscale, via, civico,citta, provincia, cap, telefono, email)
+            self._lista_atleti.append(atleta)
+            return True
+
+        return False
