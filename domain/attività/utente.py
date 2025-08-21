@@ -13,13 +13,16 @@ class Utente(ABC):
 
     def __init__(self, nome: str, cognome: str, sesso: chr, nascita: str,
                  codice_fiscale: str= None, via: str= None, civico: int= None,
-                 citta: str= None, provincia: str= None, cap: int= None):
+                 citta: str= None, provincia: str= None, cap: int= None,
+                 telefono: str= None, email: str= None):
         self._nome = nome
         self._cognome = cognome
         self._sesso = sesso
         self._nascita = datetime.datetime.fromisoformat(nascita)
         self._codice_fiscale = codice_fiscale
         self._indirizzo = Indirizzo(via, civico, provincia, citta, cap)
+        self._telefono = telefono
+        self._email = email
         self._id = Utente._assegna_id()
 
     def __str__(self):
@@ -34,6 +37,12 @@ class Utente(ABC):
 
     def get_id(self):
         return self._id
+
+    def get_telefono(self):
+        return self._telefono
+
+    def get_email(self):
+        return self._email
 
     @abstractmethod
     def get_ruolo(self):
