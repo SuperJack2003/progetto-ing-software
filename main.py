@@ -1,7 +1,6 @@
 from domain.attività.allenatore import Allenatore
 from domain.attività.atleta import Atleta
 
-
 def main():
     utente = Atleta("Giacomo", "Cipolletta", "M", "2003-07-30",
                     "CPLGCM03L30A271T", "Via A. Maggini", 142,
