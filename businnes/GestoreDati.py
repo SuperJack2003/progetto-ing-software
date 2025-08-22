@@ -13,12 +13,13 @@ from domain.attività.contratto_allenatore_corso import ContrattoAllenatoreCorso
 
 from businnes.GestoreAtleti import GestoreAtleti
 from businnes.GestoreAllenatori import GestoreAllenatore
+from businnes.GestoreCorsi import GestoreCorsi
 
 cartella_dati = Path(__file__).parent.parent / 'data'
 cartella_dati.mkdir(parents=True, exist_ok=True)
 
 def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllenatore, gestore_abbonamenti,
-                gestore_corsi, gestore_schede, gestore_notifiche):
+                gestore_corsi: GestoreCorsi, gestore_schede, gestore_notifiche):
     try:
         with open(cartella_dati / 'utenti.pkl', 'rb') as f:
             print ("Caricamento utenti...")
@@ -46,6 +47,7 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             print ("Caricamento corsi...")
 
             lista_corsi = pickle.load(f)
+            gestore_corsi.set_lista_corsi(lista_corsi)
 
         with open(cartella_dati / 'schede.pkl', 'rb') as f:
             print ("Caricamento schede...")
@@ -80,9 +82,11 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
 
                 elif isinstance(contratto, ContrattoAllenatoreCorso):
                     lista_contratti_allenatore_corso.append(contratto)
+                    gestore_corsi.set_lista_contratti_allenatori(lista_contratti_allenatore_corso)
 
                 elif isinstance(contratto, ContrattoAtletaCorso):
                     lista_contratti_atleta_corso.append(contratto)
+                    gestore_corsi.set_lista_contratti_atleti(lista_contratti_atleta_corso)
 
                 elif isinstance(contratto, ContrattoAtletaAllenatore):
                     lista_contratti_allenatore_atleta.append(contratto)

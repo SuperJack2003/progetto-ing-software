@@ -9,5 +9,8 @@ class Abbonamento:
     def get_tipo(self):
         return self._tipo
 
+    def get_nome(self):
+        return f"{self._durata}-{self._tipo}" #Es. Nome: 2-corsi+sala
+
     def __str__(self):
         return f"{self._durata} mesi, {self._tipo}"
