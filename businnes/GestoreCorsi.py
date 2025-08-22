@@ -1,0 +1,84 @@
+import datetime
+
+from tensorflow.python.ops.gen_array_ops import Split
+
+from domain.servizio.corso import Corso
+
+from domain.attività.atleta import Atleta
+
+from domain.attività.contratto_atleta_corso import ContrattoAtletaCorso
+
+class GestoreCorsi:
+
+    def __init__(self):
+        self._lista_corsi = []
+        self._lista_contratti_atleti= []
+
+    def get_lista_corsi(self):
+        return self._lista_corsi
+
+    def get_corso(self, nome_corso: str):
+        for corso in self._lista_corsi:
+            if corso.get_nome() == nome_corso:
+                return corso
+        return None
+
+    #Lunedì 18:00-20:00, Mercoledì 17:00-19:00, Venerdì 18:00-20:00
+
+    def get_corsi_in_partenza(self):
+        risultato = []
+
+        for corso in self._lista_corsi:
+            orari_corso = corso.get_orari_corso()
+            orari_corso = orari_corso.split(",") #Divisione della stringa per prendere i giorni
+
+            for data in orari_corso:
+                giorno = data.split(" ")[0] #Giorno (a lettere)
+
+                traduzione_giorni = {"Monday": "Lunedì",
+                                     "Tuesday": "Martedì",
+                                     "Wednesday": "Mercoledì",
+                                     "Thursday": "Giovedì",
+                                     "Friday": "Venerdì",
+                                     "Saturday": "Sabato",
+                                     "Sunday": "Domenica"}
+
+                domani = traduzione_giorni.get((datetime.date.today() + datetime.timedelta(days=1)).strftime("%A")) #Giorno di domani, preso e tradotto in italiano
+
+                if giorno == domani:
+                    risultato.append(corso)
+
+        return risultato
+
+    def set_stato_corso(self, nome_corso: str, stato: bool):
+        corso = self.get_corso(nome_corso)
+        if corso is None:
+            return False
+        elif corso.get_stato == stato:
+            return True
+        else:
+            corso.set_status(stato)
+            return True
+
+    def set_lista_corsi(self, lista_corsi):
+        self._lista_corsi = lista_corsi
+
+    def aggiungi_corso(self, nome: str, orario_corso: str):
+        da_aggiungere = Corso(nome, orario_corso)
+        self._lista_corsi.append(da_aggiungere)
+
+    def iscrivi_atleta(self, atleta: Atleta, nome_corso: str):
+        corso = self.get_corso(nome_corso)
+        if corso is None:
+            return False
+        else:
+            lista_iscrizioni = corso.get_lista_iscrizioni()
+            for iscrizione in lista_iscrizioni:
+                if iscrizione.get_atleta() == atleta:
+                    return True
+                else:
+                    iscrizione = ContrattoAtletaCorso(atleta, corso, datetime.datetime.now().__str__())
+                    self._lista_contratti_atleti.append(iscrizione)
+                    corso.aggiungi_iscritto(iscrizione)
+                    atleta.aggiungi_iscrizione(iscrizione)
+                    return True
