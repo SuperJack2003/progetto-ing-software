@@ -23,8 +23,6 @@ class GestoreCorsi:
                 return corso
         return None
 
-    #Lunedì 18:00-20:00, Mercoledì 17:00-19:00, Venerdì 18:00-20:00
-
     def get_corsi_in_partenza(self):
         risultato = []
 
