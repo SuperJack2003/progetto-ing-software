@@ -1,6 +1,7 @@
 from domain.attività.utente import Utente
 
 from domain.attività.contratto_atleta_corso import ContrattoAtletaCorso
+from domain.attività.contratto_abbonamento import ContrattoAbbonamento
 
 class Atleta (Utente):
     def __init__(self, nome: str, cognome: str, sesso: chr, nascita: str,
@@ -24,3 +25,6 @@ class Atleta (Utente):
 
     def aggiungi_iscrizione(self, iscrizione: ContrattoAtletaCorso):
         self._iscrizioni_corsi.append(iscrizione)
+
+    def assegna_abbonamento(self, contratto_abbonamento: ContrattoAbbonamento):
+        self._contratto_abbonamento = contratto_abbonamento

@@ -112,7 +112,7 @@ class GestoreCorsi:
                 if iscrizione.get_atleta() == atleta:
                     return True
                 else:
-                    iscrizione = ContrattoAtletaCorso(atleta, corso, datetime.datetime.now().__str__())
+                    iscrizione = ContrattoAtletaCorso(atleta, corso, datetime.date.today().__str__())
                     self._lista_contratti_atleti.append(iscrizione)
                     corso.aggiungi_iscritto(iscrizione)
                     atleta.aggiungi_iscrizione(iscrizione)
