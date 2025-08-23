@@ -2,12 +2,14 @@ import datetime
 from dateutil.relativedelta import relativedelta
 
 from domain.attività.atleta import Atleta
+from domain.attività.allenatore import Allenatore
 from domain.servizio.scheda import Scheda
 
 class ContrattoScheda():
-    def __init__(self, atleta: Atleta, scheda: Scheda, durata: int, data: str):
+    def __init__(self, atleta: Atleta, scheda: Scheda, creatore: Allenatore, durata: int, data: str):
         self._atleta = atleta
         self._scheda = scheda
+        self._creatore = creatore
         self._durata = durata
         self._stato = False
         self._data = datetime.datetime.fromisoformat(data)
@@ -22,6 +24,9 @@ class ContrattoScheda():
 
     def get_scheda(self):
         return self._scheda
+
+    def get_creatore(self):
+        return self._creatore
 
     def get_stato(self):
         return self._stato
