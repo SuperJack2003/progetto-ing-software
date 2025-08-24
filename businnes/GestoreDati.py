@@ -12,16 +12,17 @@ from domain.attività.contratto_atleta_allenatore import ContrattoAtletaAllenato
 from domain.attività.contratto_allenatore_corso import ContrattoAllenatoreCorso
 
 from businnes.GestoreAtleti import GestoreAtleti
-from businnes.GestoreAllenatori import GestoreAllenatore
+from businnes.GestoreAllenatori import GestoreAllenatori
 from businnes.GestoreCorsi import GestoreCorsi
 from businnes.GestoreAbbonamenti import GestoreAbbonamenti
 from businnes.GestoreSchede import GestoreSchede
+from businnes.GestoreNotifiche import GestoreNotifiche
 
 cartella_dati = Path(__file__).parent.parent / 'data'
 cartella_dati.mkdir(parents=True, exist_ok=True)
 
-def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllenatore, gestore_abbonamenti: GestoreAbbonamenti,
-                gestore_corsi: GestoreCorsi, gestore_schede: GestoreSchede, gestore_notifiche):
+def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllenatori, gestore_abbonamenti: GestoreAbbonamenti,
+                gestore_corsi: GestoreCorsi, gestore_schede: GestoreSchede, gestore_notifiche: GestoreNotifiche):
     try:
         with open(cartella_dati / 'utenti.pkl', 'rb') as f:
             print ("Caricamento utenti...")
@@ -103,6 +104,9 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
                 elif isinstance(contratto, ContrattoAtletaAllenatore):
                     lista_contratti_allenatore_atleta.append(contratto)
 
+            #Caricamento Contratti Allenatori
+            gestore_allenatori.set_lista_contratti(lista_contratti_allenatore_atleta)
+
             #Caricamento Contratti Abbonamenti
             gestore_abbonamenti.set_lista_contratti(lista_contratti_abbonamento)
 
@@ -118,6 +122,9 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             print ("Caricamento notifiche...")
 
             lista_notifiche = pickle.load(f)
+
+            #Caricamento Notifiche
+            gestore_notifiche.set_lista_notifiche(lista_notifiche, gestore_atleti, gestore_allenatori)
 
     except FileNotFoundError:
         print(f"File {f}")

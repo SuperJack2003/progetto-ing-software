@@ -3,6 +3,7 @@ from domain.attività.utente import Utente
 from domain.attività.contratto_atleta_corso import ContrattoAtletaCorso
 from domain.attività.contratto_abbonamento import ContrattoAbbonamento
 from domain.attività.contratto_scheda import ContrattoScheda
+from domain.attività.contratto_atleta_allenatore import ContrattoAtletaAllenatore
 
 class Atleta (Utente):
     def __init__(self, nome: str, cognome: str, sesso: chr, nascita: str,
@@ -35,3 +36,6 @@ class Atleta (Utente):
 
     def assegna_scheda(self, scheda: ContrattoScheda):
         self._contratto_scheda.append(scheda)
+
+    def assegna_allenatore(self, contratto_allenatore: ContrattoAtletaAllenatore):
+        self._contratto_atleta_allenatore = contratto_allenatore
