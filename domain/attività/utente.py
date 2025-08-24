@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 from ..value_objects import Indirizzo
 import datetime
 
+from domain.servizio.notifica import Notifica
+
 class Utente(ABC):
 
     _contatore_id = 0
@@ -24,6 +26,7 @@ class Utente(ABC):
         self._telefono = telefono
         self._email = email
         self._id = Utente._assegna_id()
+        self._lista_notifiche = []
 
     def __str__(self):
         return f"{self._nome} {self._cognome}"
@@ -43,6 +46,9 @@ class Utente(ABC):
 
     def get_email(self):
         return self._email
+
+    def aggiungi_notifica(self, notifica: Notifica):
+        self._lista_notifiche.append(notifica)
 
     @abstractmethod
     def get_ruolo(self):
