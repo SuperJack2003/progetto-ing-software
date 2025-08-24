@@ -15,12 +15,13 @@ from businnes.GestoreAtleti import GestoreAtleti
 from businnes.GestoreAllenatori import GestoreAllenatore
 from businnes.GestoreCorsi import GestoreCorsi
 from businnes.GestoreAbbonamenti import GestoreAbbonamenti
+from businnes.GestoreSchede import GestoreSchede
 
 cartella_dati = Path(__file__).parent.parent / 'data'
 cartella_dati.mkdir(parents=True, exist_ok=True)
 
 def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllenatore, gestore_abbonamenti: GestoreAbbonamenti,
-                gestore_corsi: GestoreCorsi, gestore_schede, gestore_notifiche):
+                gestore_corsi: GestoreCorsi, gestore_schede: GestoreSchede, gestore_notifiche):
     try:
         with open(cartella_dati / 'utenti.pkl', 'rb') as f:
             print ("Caricamento utenti...")
@@ -52,6 +53,8 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             print ("Caricamento corsi...")
 
             lista_corsi = pickle.load(f)
+
+            #Caricamento Corsi
             gestore_corsi.set_lista_corsi(lista_corsi)
 
         with open(cartella_dati / 'schede.pkl', 'rb') as f:
@@ -59,10 +62,16 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
 
             lista_schede = pickle.load(f)
 
+            #Caricamento Schede
+            gestore_schede.set_lista_schede(lista_schede)
+
         with open(cartella_dati / 'esercizi.pkl', 'rb') as f:
             print ("Caricamento esercizi...")
 
             lista_esercizi = pickle.load(f)
+
+            #Caricamento Esercizi
+            gestore_schede.set_lista_esercizi(lista_esercizi)
 
         with open(cartella_dati / 'contratti.pkl', 'rb') as f:
             print("Caricamento contratti...")
@@ -70,7 +79,7 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             lista_contratti = pickle.load(f)
             lista_contratti_abbonamento = []
             lista_contratti_scheda = []
-            lista_contratti_esercizio = []
+            lista_contratti_esercizi = []
             lista_contratti_allenatore_corso = []
             lista_contratti_atleta_corso = []
             lista_contratti_allenatore_atleta = []
@@ -83,7 +92,7 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
                     lista_contratti_scheda.append(contratto)
 
                 elif isinstance(contratto, ContrattoEsercizio):
-                    lista_contratti_esercizio.append(contratto)
+                    lista_contratti_esercizi.append(contratto)
 
                 elif isinstance(contratto, ContrattoAllenatoreCorso):
                     lista_contratti_allenatore_corso.append(contratto)
@@ -101,6 +110,9 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             gestore_corsi.set_lista_contratti_allenatori(lista_contratti_allenatore_corso)
             gestore_corsi.set_lista_contratti_atleti(lista_contratti_atleta_corso)
 
+            #Caricamento Contratti Scede
+            gestore_schede.set_lista_contratti_esercizi(lista_contratti_esercizi)
+            gestore_schede.set_lista_contratti_schede(lista_contratti_scheda)
 
         with open(cartella_dati / 'notifiche.pkl', 'wb') as f:
             print ("Caricamento notifiche...")

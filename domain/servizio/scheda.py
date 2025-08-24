@@ -21,9 +21,9 @@ class Scheda:
     def get_data(self):
         return self._data_creazione
 
-    def aggiungi_esercizio_singolo(self, contratto_esercizio: ContrattoEsercizio):
+    def aggiungi_esercizio(self, contratto_esercizio: ContrattoEsercizio):
         self._lista_esercizi.append(contratto_esercizio) 
     
-    def aggiungi_esercizi_multipli(self, lista_esercizi: list):
+    def aggiungi_esercizi(self, lista_esercizi: list[ContrattoEsercizio]):
         self._lista_esercizi.extend(lista_esercizi)
 
