@@ -1,23 +1,19 @@
 import datetime
 
-from domain.attività.allenatore import Allenatore
-from domain.servizio.corso import Corso
+from domain.attività.contratto import Contratto
 
-class ContrattoAllenatoreCorso():
-    def __init__(self, allenatore: Allenatore, corso: Corso, data: str):
-        self._allenatore = allenatore
-        self._corso = corso
-        self._data = datetime.datetime.fromisoformat(data)
+class ContrattoAllenatoreCorso(Contratto):
+    def __init__(self, id_allenatore: int, id_corso: int, data: datetime.date):
+        super().__init__()
+        self._id_allenatore = id_allenatore
+        self._id_corso = id_corso
+        self._data = data
 
     def get_allenatore(self):
-        return self._allenatore
+        return self._id_allenatore
 
     def get_corso(self):
-        return self._corso
+        return self._id_corso
 
     def get_data(self):
         return self._data
-
-    def __str__(self):
-        return (f"Il corso {self._corso.get_nome()} è tenuto dall'allenatore "
-                f"{self._allenatore.__str__()}")
