@@ -1,23 +1,19 @@
 import datetime
 
-from domain.attività.atleta import Atleta
-from domain.attività.allenatore import Allenatore
+from domain.attività.contratto import Contratto
 
-class ContrattoAtletaAllenatore():
-    def __init__(self, atleta: Atleta, allenatore: Allenatore, data: str):
-        self._atleta = atleta
-        self._allenatore = allenatore
-        self._data = datetime.datetime.fromisoformat(data)
+class ContrattoAtletaAllenatore(Contratto):
+    def __init__(self, id_atleta: int, id_allenatore: int, data: datetime.date):
+        super().__init__()
+        self._id_atleta = id_atleta
+        self._id_allenatore = id_allenatore
+        self._data_inizio = data
 
     def get_allenatore(self):
-        return self._allenatore
+        return self._id_allenatore
 
     def get_atleta(self):
-        return self._atleta
+        return self._id_atleta
 
     def get_data(self):
-        return self._data
-
-    def __str__(self):
-        return (f"Contratto tra l'allenatore: {self._allenatore.__str__()}"
-                f" e l'atleta: {self._atleta.__str__()}")
+        return self._data_inizio

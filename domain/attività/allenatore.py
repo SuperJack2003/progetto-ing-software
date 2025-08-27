@@ -1,4 +1,3 @@
-from domain.attività.contratto_atleta_allenatore import ContrattoAtletaAllenatore
 from domain.attività.utente import Utente
 
 class Allenatore(Utente):
@@ -10,6 +9,7 @@ class Allenatore(Utente):
                          provincia, cap, telefono, email)
         self._lista_corsi = []
         self._lista_atleti = []
+        self._lista_schede = []
 
     def get_ruolo(self):
         return "allenatore"
@@ -20,8 +20,14 @@ class Allenatore(Utente):
     def get_lista_atleti(self):
         return self._lista_atleti
 
-    def aggiungi_corso(self, corso):
-        self._lista_corsi.append(corso)
+    def get_lista_schede(self):
+        return self._lista_schede
 
-    def aggiungi_atleta(self, contratto_atleta: ContrattoAtletaAllenatore):
-        self._lista_atleti.append(contratto_atleta)
+    def aggiungi_corso(self, id_contratto_corso: int):
+        self._lista_corsi.append(id_contratto_corso)
+
+    def aggiungi_atleta(self, id_contratto_atleta: int):
+        self._lista_atleti.append(id_contratto_atleta)
+
+    def aggiungi_scheda(self, id_contratto_scheda: int):
+        self._lista_schede.append(id_contratto_scheda)

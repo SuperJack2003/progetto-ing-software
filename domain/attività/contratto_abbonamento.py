@@ -1,19 +1,18 @@
 import datetime
 from dateutil.relativedelta import relativedelta
 
-from domain.attività.atleta import Atleta
-from domain.servizio.abbonamento import Abbonamento
+from domain.attività.contratto import Contratto
 
-class ContrattoAbbonamento():
-    def __init__(self, atleta: Atleta, abbonamento: Abbonamento, data: str):
-        self._atleta = atleta
-        self._abbonamento = abbonamento
-        self._scadenza = self._calcola_scadenza()
-        self._data = datetime.datetime.fromisoformat(data)
+class ContrattoAbbonamento(Contratto):
 
-    def _calcola_scadenza(self):
-        scadenza = self._data + relativedelta(months=self._abbonamento.get_durata())
-        return scadenza
+    def __init__(self, id_atleta: int, id_abbonamento: int, durata: int, tipologia: str, data: datetime.date):
+        super().__init__()
+        self._atleta = id_atleta
+        self._abbonamento = id_abbonamento
+        self._tipologia = tipologia
+        self._data_inizio = data
+        self._durata = durata
+        self._scadenza = self._data_inizio + relativedelta(months=durata)
 
     def get_atleta(self):
         return self._atleta
@@ -21,12 +20,11 @@ class ContrattoAbbonamento():
     def get_abbonamento(self):
         return self._abbonamento
 
+    def get_tipologia(self):
+        return self._tipologia
+
     def get_data(self):
-        return self._data
+        return self._data_inizio
 
     def get_scadenza(self):
         return self._scadenza
-
-    def __str__(self):
-        return (f"{self._atleta.__str__()} ha un abbonamento: {self._abbonamento.__str__()} in scadenza"
-                f"{self._scadenza}")

@@ -1,27 +1,24 @@
 import datetime
 
-from domain.attività.atleta import Atleta
-from domain.servizio.corso import Corso
+from domain.attività.contratto import Contratto
 
-class ContrattoAtletaCorso():
-    def __init__(self, atleta: Atleta, corso: Corso, data: str):
-        self._atleta = atleta
-        self._corso = corso
+class ContrattoAtletaCorso(Contratto):
+    def __init__(self, id_atleta: int, id_corso: int, data: datetime.date):
+        super.__init__()
+        self._id_atleta = id_atleta
+        self._id_corso = id_corso
         self.presenze = 0
-        self._data = datetime.datetime.fromisoformat(data)
+        self._data_inizio = data
 
     def get_atleta(self):
-        return self._atleta
+        return self._id_atleta
 
     def get_corso(self):
-        return self._corso
+        return self._id_corso
 
     def segna_presenza(self):
         self.presenze +=1
         return self.presenze
 
     def get_data(self):
-        return self._data
-
-    def __str__(self):
-        return f"L'atleta {self._atleta.__str__()} è iscritto al corso {self._corso.get_nome()}"
+        return self._data_inizio

@@ -1,25 +1,36 @@
 import datetime
 
-from domain.servizio.scheda import Scheda
-from domain.servizio.esercizio import Esercizio
+from domain.attività.contratto import Contratto
 
-class ContrattoEsercizio():
-    def __init__(self, esercizio: Esercizio, scheda: Scheda, data: str, serie: int,
+class ContrattoEsercizio(Contratto):
+    def __init__(self, id_esercizio: int, id_scheda: int, data: datetime.date, serie: int,
                  ripetizioni: int, recupero: int, modalita: str=""):
-        self._esercizio = esercizio
-        self._scheda = scheda
+        super().__init__()
+        self._id_esercizio = id_esercizio
+        self._id_scheda = id_scheda
         self._serie = serie
         self._ripetizioni = ripetizioni
         self._recupero = recupero
         self._modalita = modalita
-        self._data = datetime.datetime.fromisoformat(data)
+        self._data_inizio = data
 
     def get_esercizio(self):
-        return self._esercizio
+        return self._id_esercizio
 
     def get_scheda(self):
-        return self._scheda
+        return self._id_scheda
 
-    def __str__ (self):
-        return (f"Svolgere {self._esercizio.get_nome()} {self._serie}X{self._ripetizioni} "
-                f"con {self._recupero}s recupero. {self._modalita}")
+    def get_serie(self):
+        return self._serie
+
+    def get_ripetizioni(self):
+        return self._ripetizioni
+
+    def get_recupero(self):
+        return self._recupero
+
+    def get_modalita(self):
+        return self._modalita
+
+    def get_data_inizio(self):
+        return self._data_inizio

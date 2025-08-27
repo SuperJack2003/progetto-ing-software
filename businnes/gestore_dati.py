@@ -11,12 +11,12 @@ from domain.attività.contratto_abbonamento import ContrattoAbbonamento
 from domain.attività.contratto_atleta_allenatore import ContrattoAtletaAllenatore
 from domain.attività.contratto_allenatore_corso import ContrattoAllenatoreCorso
 
-from businnes.GestoreAtleti import GestoreAtleti
-from businnes.GestoreAllenatori import GestoreAllenatori
-from businnes.GestoreCorsi import GestoreCorsi
-from businnes.GestoreAbbonamenti import GestoreAbbonamenti
-from businnes.GestoreSchede import GestoreSchede
-from businnes.GestoreNotifiche import GestoreNotifiche
+from businnes.gestore_atleti import GestoreAtleti
+from businnes.gestore_allenatori import GestoreAllenatori
+from businnes.gestore_corsi import GestoreCorsi
+from businnes.gestore_abbonamenti import GestoreAbbonamenti
+from businnes.gestore_schede import GestoreSchede
+from businnes.gestore_notifiche import GestoreNotifiche
 
 cartella_dati = Path(__file__).parent.parent / 'data'
 cartella_dati.mkdir(parents=True, exist_ok=True)
