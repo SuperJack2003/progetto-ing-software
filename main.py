@@ -23,12 +23,12 @@ def main():
     dati.carica_dati(gestore_atleti, gestore_allenatori, gestore_abbonamenti, gestore_corsi, gestore_schede, gestore_notifiche)
 
     while True:
-        print("Dati caricati! Cosa vuoi fare?")
-        print("1. Crea Atleta"
-              "2. Visualizza Atleti"
-              "3. Crea Allenatore"
-              "4. Visualizza Allenatori"
-              "5. Salva e chiudi")
+        print("\nDati caricati! Cosa vuoi fare?\n")
+        print("1. Crea Atleta\n"
+              "2. Visualizza Atleti\n"
+              "3. Crea Allenatore\n"
+              "4. Visualizza Allenatori\n"
+              "5. Salva e chiudi\n")
 
         choice = input()
         if choice == "1":
@@ -72,7 +72,7 @@ def crea_atleta(gestore_atleti: GestoreAtleti):
 
 def visualizza_atleti(gestore_atleti: GestoreAtleti):
     lista_atleti = gestore_atleti.get_lista_atleti()
-    i = 0
+    i = 1
 
     for atleta in lista_atleti:
         print(f"{++i}. {atleta.__str__()}")
@@ -102,9 +102,10 @@ def crea_allenatore(gestore_allenatori: GestoreAllenatori):
 
 def visualizza_allenatori(gestore_allenatori: GestoreAllenatori):
     lista_allenatori = gestore_allenatori.get_lista_allenatori()
-    i = 0
+    i = 1
 
     for allenatore in lista_allenatori:
-        print(f"{++i}. {allenatore.__str__()}")
+        print(f"{i}. {allenatore.__str__()}")
+        i += 1
 
 main()
