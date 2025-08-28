@@ -26,7 +26,7 @@ from businnes.gestore_abbonamenti import GestoreAbbonamenti
 from businnes.gestore_schede import GestoreSchede
 from businnes.gestore_notifiche import GestoreNotifiche
 
-cartella_dati = Path(__file__).parent.parent / 'data'
+cartella_dati = Path(r"C:\Users\giaco\Desktop\Miei_File\Code\Uni\progetto-ing-software\dati")
 cartella_dati.mkdir(parents=True, exist_ok=True)
 
 def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllenatori, gestore_abbonamenti: GestoreAbbonamenti,
@@ -43,6 +43,13 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             gestore_atleti.set_lista_atleti(lista_atleti)
             gestore_allenatori.set_lista_allenatori(lista_allenatori)
 
+    except FileNotFoundError:
+        print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
+
+    try:
         with open(cartella_dati / 'abbonamenti.pkl', 'rb') as f:
             print ("Caricamento abbonamenti...")
 
@@ -51,6 +58,13 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             #Caricamento Abbonamenti
             gestore_abbonamenti.set_lista_abbonamenti(lista_abbonamenti)
 
+    except FileNotFoundError:
+        print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
+
+    try:
         with open(cartella_dati / 'corsi.pkl', 'rb') as f:
             print ("Caricamento corsi...")
 
@@ -59,6 +73,13 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             #Caricamento Corsi
             gestore_corsi.set_lista_corsi(lista_corsi)
 
+    except FileNotFoundError:
+        print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
+
+    try:
         with open(cartella_dati / 'schede.pkl', 'rb') as f:
             print ("Caricamento schede...")
 
@@ -67,6 +88,13 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             #Caricamento Schede
             gestore_schede.set_lista_schede(lista_schede)
 
+    except FileNotFoundError:
+        print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
+
+    try:
         with open(cartella_dati / 'esercizi.pkl', 'rb') as f:
             print ("Caricamento esercizi...")
 
@@ -75,6 +103,13 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             #Caricamento Esercizi
             gestore_schede.set_lista_esercizi(lista_esercizi)
 
+    except FileNotFoundError:
+        print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
+
+    try:
         with open(cartella_dati / 'contratti.pkl', 'rb') as f:
             print("Caricamento contratti...")
 
@@ -100,6 +135,13 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             gestore_schede.set_lista_contratti_esercizi(lista_contratti_esercizi)
             gestore_schede.set_lista_contratti_schede(lista_contratti_scheda)
 
+    except FileNotFoundError:
+        print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
+
+    try:
         with open(cartella_dati / 'notifiche.pkl', 'wb') as f:
             print ("Caricamento notifiche...")
 
@@ -110,6 +152,9 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
 
     except FileNotFoundError:
         print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
 
 def salva_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllenatori, gestore_abbonamenti: GestoreAbbonamenti,
                 gestore_corsi: GestoreCorsi, gestore_schede: GestoreSchede, gestore_notifiche: GestoreNotifiche):
@@ -128,30 +173,65 @@ def salva_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllenat
 
             pickle.dump(lista_utenti, f)
 
+    except FileNotFoundError:
+        print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
+
+    try:
         with open(cartella_dati / 'abbonamenti.pkl', 'wb') as f:
             print ("Salvataggio abbonamenti...")
 
             lista_abbonamenti = gestore_abbonamenti.get_lista_abbonamenti()
             pickle.dump(lista_abbonamenti, f)
 
+    except FileNotFoundError:
+        print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
+
+    try:
         with open(cartella_dati / 'corsi.pkl', 'wb') as f:
             print ("Salvataggio corsi...")
 
             lista_corsi = gestore_corsi.get_lista_corsi()
             pickle.dump(lista_corsi, f)
 
+    except FileNotFoundError:
+        print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
+
+    try:
         with open(cartella_dati / 'schede.pkl', 'wb') as f:
             print ("Salvataggio schede...")
 
             lista_schede = gestore_schede.get_lista_schede()
             pickle.dump(lista_schede, f)
 
+    except FileNotFoundError:
+        print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
+
+    try:
         with open(cartella_dati / 'esercizi.pkl', 'wb') as f:
             print ("Salvataggio esercizi...")
 
             lista_esercizi = gestore_schede.get_lista_esercizi()
             pickle.dump(lista_esercizi, f)
 
+    except FileNotFoundError:
+        print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
+
+    try:
         with open(cartella_dati / 'contratti.pkl', 'wb') as f:
             print ("Salvataggio contratti...")
 
@@ -173,6 +253,13 @@ def salva_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllenat
 
             pickle.dump(lista_contratti, f)
 
+    except FileNotFoundError:
+        print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
+
+    try:
         with open(cartella_dati / 'notifiche.pkl', 'wb') as f:
             print("Salvataggio notifiche...")
 
@@ -181,3 +268,6 @@ def salva_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllenat
 
     except FileNotFoundError:
         print(f"File {f} non trovato")
+
+    except EOFError:
+        print(f"File {f} vuoto")
