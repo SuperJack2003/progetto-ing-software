@@ -44,7 +44,8 @@ class GestoreSchede:
         lista_contratti = []
 
         for scheda in self._lista_contratti_esercizi.keys():
-            lista_contratti.append(self._lista_contratti_esercizi[scheda])
+            for contratto in self._lista_contratti_esercizi[scheda]:
+                lista_contratti.append(contratto)
 
         return lista_contratti
 
@@ -52,7 +53,8 @@ class GestoreSchede:
         lista_contratti = []
 
         for atleta in self._lista_contratti_schede.keys():
-            lista_contratti.append(self._lista_contratti_schede[atleta])
+            for scheda in self._lista_contratti_schede[atleta]:
+                lista_contratti.append(scheda)
 
         return lista_contratti
 

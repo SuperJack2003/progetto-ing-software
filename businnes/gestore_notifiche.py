@@ -17,11 +17,8 @@ class GestoreNotifiche:
         lista_notifiche = []
 
         for destinatario in self._lista_notifiche.keys():
-            notifiche = self._lista_notifiche[destinatario]
-            if len(notifiche) == 1:
-                lista_notifiche.append(notifiche)
-            elif len(notifiche) > 1:
-                lista_notifiche.extend(notifiche)
+            for notifica in self._lista_notifiche[destinatario]:
+                lista_notifiche.append(notifica)
 
         return lista_notifiche
 
