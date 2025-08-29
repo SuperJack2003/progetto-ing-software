@@ -326,3 +326,40 @@ def salva_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllenat
 
     except EOFError:
         print(f"File {file_contatori} vuoto")
+
+def elimina_dati():
+    nomi_file_dati = [
+        'utenti.pkl',
+        'abbonamenti.pkl',
+        'corsi.pkl',
+        'schede.pkl',
+        'esercizi.pkl',
+        'contratti.pkl',
+        'notifiche.pkl',
+    ]
+
+    for nome_file in nomi_file_dati:
+        percorso = cartella_dati / nome_file
+
+        try:
+            with open(percorso, "wb") as f:
+                continue
+        except Exception as e:
+            print (f"Errore durante la scrittura del file: {e}")
+
+    try:
+        with open(file_contatori, "wb") as f:
+            contatori = {
+                "contatore_contratti": 0,
+                "contatore_utenti": 0,
+                "contatore_abbonamenti": 0,
+                "contatore_corsi": 0,
+                "contatore_esercizi": 0,
+                "contatore_notifiche": 0,
+                "contatore_schede": 0,
+            }
+
+            pickle.dump(contatori, f)
+
+    except Exception as e:
+        print(f"Errore durante la scrittura del file: {e}")

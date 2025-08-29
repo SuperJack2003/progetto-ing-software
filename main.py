@@ -7,6 +7,8 @@ from businnes.gestore_notifiche import GestoreNotifiche
 import businnes.gestore_dati as dati
 
 def main():
+    dati.elimina_dati()
+
     gestore_atleti = GestoreAtleti()
     gestore_allenatori = GestoreAllenatori()
     gestore_abbonamenti = GestoreAbbonamenti()
@@ -22,90 +24,35 @@ def main():
 
     dati.carica_dati(gestore_atleti, gestore_allenatori, gestore_abbonamenti, gestore_corsi, gestore_schede, gestore_notifiche)
 
-    while True:
-        print("\nDati caricati! Cosa vuoi fare?\n")
-        print("1. Crea Atleta\n"
-              "2. Visualizza Atleti\n"
-              "3. Crea Allenatore\n"
-              "4. Visualizza Allenatori\n"
-              "5. Salva e chiudi\n")
+    gestore_atleti.aggiungi_atleta("Giacomo", "Cipolletta", "M", "2003-07-30", "CPLGCM03L30A271T")
+    gestore_allenatori.aggiungi_allenatore("Denny", "Lazzarin", "M", "1981-01-01", "CFDENNY")
 
-        choice = input()
-        if choice == "1":
-            crea_atleta(gestore_atleti)
-        elif choice == "2":
-            visualizza_atleti(gestore_atleti)
-        elif choice == "3":
-            crea_allenatore(gestore_allenatori)
-        elif choice == "4":
-            visualizza_allenatori(gestore_allenatori)
-        elif choice == "5":
-            dati.salva_dati(gestore_atleti, gestore_allenatori, gestore_abbonamenti, gestore_corsi, gestore_schede, gestore_notifiche)
-            print ("Arrivederci")
-            break
-        else:
-            print("Opzione non valida")
+    for allenatore in gestore_allenatori.get_lista_allenatori():
+        print(f"\nAllenatore: {allenatore.__str__()} id: {allenatore.get_id()}")
 
+    print("\n")
 
-def crea_atleta(gestore_atleti: GestoreAtleti):
-    print("Inserire i dati in ordine:")
-
-    nome = input ("Nome: ")
-    cognome = input ("Cognome: ")
-    sesso = input ("Sesso: ")
-    nascita = input ("Nascita: ")
-    codice_fiscale = input ("Codice fiscale: ")
-    via = input ("Via: ")
-    civico = int(input ("Civico: "))
-    citta = input ("Citta: ")
-    provincia = input ("Provincia: ")
-    cap = int(input ("Cap: "))
-    telefono = input ("Telefono: ")
-    email = input ("Email: ")
-
-    risultato = gestore_atleti.aggiungi_atleta(nome, cognome, sesso, nascita, codice_fiscale, via, civico, citta, provincia, cap, telefono, email)
-
-    if risultato:
-        print("Operazione riuscita con successo")
-    else:
-        print("Operazione non riuscita")
-
-def visualizza_atleti(gestore_atleti: GestoreAtleti):
-    lista_atleti = gestore_atleti.get_lista_atleti()
+    gestore_allenatori.aggiungi_contratto(2, 1)
     i = 1
 
-    for atleta in lista_atleti:
-        print(f"{++i}. {atleta.__str__()}")
+    for contratto in gestore_allenatori.get_lista_contratti():
+        atleta = gestore_atleti.get_atleta_per_id(contratto.get_atleta())
+        allenatore = gestore_allenatori.get_allenatore_per_id(contratto.get_allenatore())
+        print(f"\nContratto n.{i}: Atleta: {atleta.__str__()}, Allenatore: {allenatore.__str__()}")
 
-def crea_allenatore(gestore_allenatori: GestoreAllenatori):
-    print("Inserire i dati in ordine:")
+    print("\n")
 
-    nome = input("Nome: ")
-    cognome = input("Cognome: ")
-    sesso = input("Sesso: ")
-    nascita = input("Nascita: ")
-    codice_fiscale = input("Codice fiscale: ")
-    via = input("Via: ")
-    civico = int(input("Civico: "))
-    citta = input("Citta: ")
-    provincia = input("Provincia: ")
-    cap = int(input("Cap: "))
-    telefono = input("Telefono: ")
-    email = input("Email: ")
+    gestore_abbonamenti.crea_abbonamento(1, "corsi+sala")
+    gestore_abbonamenti.crea_abbonamento(1, "corsi")
 
-    risultato = gestore_allenatori.aggiungi_allenatore(nome, cognome, sesso, nascita, codice_fiscale, via, civico, citta, provincia, cap, telefono, email)
-
-    if risultato:
-        print("Operazione riuscita con successo")
-    else:
-        print("Operazione non riuscita")
-
-def visualizza_allenatori(gestore_allenatori: GestoreAllenatori):
-    lista_allenatori = gestore_allenatori.get_lista_allenatori()
+    gestore_abbonamenti.crea_contratto(1, 1)
     i = 1
+    for contratto in gestore_abbonamenti.get_lista_contratti():
+        atleta = gestore_atleti.get_atleta_per_id(contratto.get_atleta())
+        abbonamento = gestore_abbonamenti.get_abbonamento(contratto.get_abbonamento())
+        print(f"\nContratto n.{i}: Atleta: {atleta.__str__()}, Abbonamento: {abbonamento.get_nome()}. In scadenza il: {contratto.get_scadenza().__str__()}")
 
-    for allenatore in lista_allenatori:
-        print(f"{i}. {allenatore.__str__()}")
-        i += 1
+    dati.salva_dati(gestore_atleti, gestore_allenatori, gestore_abbonamenti, gestore_corsi, gestore_schede, gestore_notifiche)
+
 
 main()

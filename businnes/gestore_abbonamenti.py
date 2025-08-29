@@ -95,7 +95,7 @@ class GestoreAbbonamenti:
                 return False
 
         abbonamento = self._lista_abbonamenti[id_abbonamento]
-        nuovo_contratto = ContrattoAbbonamento(id_atleta, id_abbonamento, abbonamento.get_durata(), abbonamento.get_tipologia(), datetime.date.today())
+        nuovo_contratto = ContrattoAbbonamento(id_atleta, id_abbonamento, abbonamento.get_durata(), abbonamento.get_tipo(), datetime.date.today())
 
         self._lista_contratti.update({nuovo_contratto.get_id(): nuovo_contratto})
         atleta.assegna_abbonamento(nuovo_contratto.get_id())
