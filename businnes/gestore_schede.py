@@ -106,7 +106,8 @@ class GestoreSchede:
         for scheda in lista_schede:
             if scheda.get_id() not in self._lista_schede.keys():
                 self._lista_schede.update({scheda.get_id(): scheda})
-                allenatore = self._lista_schede[scheda.get_id_allenatore()]
+                id_allenatore = self._lista_schede[scheda.get_id()].get_id_allenatore()
+                allenatore = self._gestore_allenatori.get_allenatore_per_id(id_allenatore)
                 if allenatore is not None:
                     allenatore.aggiungi_scheda(scheda.get_id())
 
@@ -139,10 +140,20 @@ class GestoreSchede:
             if contratto.get_esercizio() == id_esercizio:
                 self._lista_contratti_esercizi[scheda].remove(contratto)
 
+    def attiva_scheda(self, id_contratto: int):
+        contratto = None
+        for atleta in self._lista_contratti_schede.keys():
+            for contratto_scheda in self._lista_contratti_schede[atleta]:
+                if id_contratto == contratto_scheda.get_id():
+                    contratto = contratto_scheda
+
+        if contratto is not None:
+            contratto.set_stato(True)
+
     def disattiva_scheda(self, id_atleta: int):
         atleta = self._gestore_atleti.get_atleta_per_id(id_atleta)
 
-        if atleta in self._lista_contratti_schede.keys():
+        if atleta in self._lista_contratti_schede.keys() and self.get_scheda_attiva(id_atleta) is not None:
             self.get_scheda_attiva(id_atleta).set_stato(False)
 
     def aggiungi_scheda(self, id_allenatore: int):
@@ -188,19 +199,21 @@ class GestoreSchede:
         else:
             self._lista_contratti_esercizi.update({scheda: [nuovo_contratto]})
 
-        scheda.aggiungi_contratto(nuovo_contratto.get_id())
+        scheda.aggiungi_esercizio(nuovo_contratto.get_id())
 
         return True
 
-    def aggiungi_contratto_scheda(self, id_atleta, id_scheda: int, id_allenatore: int, durata: int):
+    def aggiungi_contratto_scheda(self, id_atleta, id_scheda: int, durata: int):
         scheda = self._lista_schede[id_scheda]
         atleta = self._gestore_atleti.get_atleta_per_id(id_atleta)
+        id_allenatore = scheda.get_id_allenatore()
         allenatore = self._gestore_allenatori.get_allenatore_per_id(id_allenatore)
 
         if scheda is None or atleta is None or allenatore is None:
             return False
 
-        if not self._gestore_abbonamenti.controllo_tipo_abbonamento(atleta.get_abbonamento(), "corsi+sala"):
+        contratto = self._gestore_abbonamenti.get_contratto_atleta(id_atleta)
+        if not self._gestore_abbonamenti.controllo_tipo_abbonamento(contratto.get_id(), "corsi+sala"):
             return False
 
         nuovo_contratto = ContrattoScheda(id_atleta, id_scheda, id_allenatore, durata, datetime.date.today())

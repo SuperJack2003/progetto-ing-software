@@ -4,7 +4,7 @@ from domain.attività.contratto import Contratto
 
 class ContrattoAtletaCorso(Contratto):
     def __init__(self, id_atleta: int, id_corso: int, data: datetime.date):
-        super.__init__()
+        super().__init__()
         self._id_atleta = id_atleta
         self._id_corso = id_corso
         self.presenze = 0

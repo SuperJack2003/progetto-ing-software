@@ -52,7 +52,7 @@ class GestoreAllenatori:
 
         for id_allenatore in self._lista_allenatori.keys():
             if da_cercare == self._lista_allenatori[id_allenatore].__str__():
-                omonimi.append(id_allenatore)
+                omonimi.append(self._lista_allenatori[id_allenatore])
 
         if not omonimi:
             return None

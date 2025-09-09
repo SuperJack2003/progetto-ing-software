@@ -28,7 +28,11 @@ class GestoreNotifiche:
             destinatario = self._gestore_allenatori.get_allenatore_per_id(id_destinatario)
         if destinatario is None:
             return None
-        return self._lista_notifiche[destinatario]
+        lista_notifiche = []
+        if destinatario.get_id() in self._lista_notifiche.keys():
+            for notifica in self._lista_notifiche[destinatario.get_id()]:
+                lista_notifiche.append(notifica)
+        return lista_notifiche
 
     def get_notifica(self, id_notifica: int):
         for destinatario in self._lista_notifiche.keys():

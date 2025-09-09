@@ -51,7 +51,7 @@ class GestoreCorsi:
         for id_corso in self._lista_corsi.keys():
             corso = self._lista_corsi[id_corso]
 
-            orari_corso = corso.get_orari_corso()
+            orari_corso = corso.get_orari_corso() #Stringa esempio "Lunedì 18-20, Mercoledì 19-21, Venerdì 18-20"
             orari_corso = orari_corso.split(",") #Divisione della stringa per prendere i giorni
 
             for data in orari_corso:
@@ -104,19 +104,19 @@ class GestoreCorsi:
     def set_lista_corsi(self, lista_corsi: list[Corso]):
         for corso in lista_corsi:
             if corso.get_id not in self._lista_corsi.keys():
-                self._lista_corsi.update({corso.get_id: corso})
+                self._lista_corsi.update({corso.get_id(): corso})
 
     def set_lista_contratti_atleti(self, lista_contratti: list[ContrattoAtletaCorso]):
         for contratto in lista_contratti:
             if contratto.get_id not in self._lista_contratti_atleti.keys():
                 self._lista_contratti_atleti.update({contratto.get_id: contratto})
-                self._gestore_atleti.get_atleta_per_id(contratto.get_atleta).aggiungi_iscrizione(contratto.get_id)
+                self._gestore_atleti.get_atleta_per_id(contratto.get_atleta()).aggiungi_iscrizione(contratto.get_id())
 
     def set_lista_contratti_allenatori(self, lista_contratti_allenatori: list[ContrattoAllenatoreCorso]):
         for contratto in lista_contratti_allenatori:
             if contratto.get_id not in self._lista_contratti_allenatori.keys():
                 self._lista_contratti_allenatori.update({contratto.get_id: contratto})
-                self._gestore_allenatori.get_allenatore_per_id(contratto.get_allenatore).aggiungi_corso(contratto.get_id)
+                self._gestore_allenatori.get_allenatore_per_id(contratto.get_allenatore()).aggiungi_corso(contratto.get_id())
 
     def set_stato_corso(self, id_corso: int, stato: bool):
         corso = self._lista_corsi[id_corso]
@@ -128,13 +128,13 @@ class GestoreCorsi:
 
         return True
 
-    def aggiungi_corso(self, nome: str, orario_corso: str):
+    def aggiungi_corso(self, nome: str, descrizione: str, eta_min: int, eta_max: int, orario_corso: str):
         for id_corso in self._lista_corsi.keys():
             corso = self._lista_corsi[id_corso]
             if corso.get_nome() == nome:
                 return False
 
-        nuovo_corso = Corso(nome, orario_corso)
+        nuovo_corso = Corso(nome, descrizione, eta_min, eta_max, orario_corso)
         self._lista_corsi.update({nuovo_corso.get_id: nuovo_corso})
 
         return True
@@ -144,6 +144,13 @@ class GestoreCorsi:
         atleta = self._gestore_atleti.get_atleta_per_id(id_atleta)
 
         if corso is None or atleta is None:
+            return False
+
+        eta_min = corso.get_eta_min()
+        eta_max = corso.get_eta_max()
+        eta_atleta = atleta.get_eta()
+
+        if eta_atleta < eta_min or eta_atleta > eta_max:
             return False
 
         nuovo_contratto = ContrattoAtletaCorso(id_atleta, id_corso, datetime.date.today())
