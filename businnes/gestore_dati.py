@@ -26,8 +26,8 @@ from businnes.gestore_abbonamenti import GestoreAbbonamenti
 from businnes.gestore_schede import GestoreSchede
 from businnes.gestore_notifiche import GestoreNotifiche
 
-cartella_progetto = Path(__file__).parent.resolve()
-cartella_dati = Path(cartella_progetto / 'data')
+cartella_progetto = Path(__file__).parent.parent.resolve()
+cartella_dati = Path(cartella_progetto / 'dati')
 cartella_dati.mkdir(parents=True, exist_ok=True)
 
 file_utenti = cartella_dati / 'utenti.pkl'
