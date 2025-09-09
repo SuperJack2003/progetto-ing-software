@@ -26,10 +26,8 @@ class GestoreAllenatori:
         lista_contratti = []
 
         for allenatore in self._lista_contratti.keys():
-            if len(self._lista_contratti[allenatore]) == 1:
-                lista_contratti.append(self._lista_contratti[allenatore])
-            elif len(self._lista_contratti[allenatore]) > 1:
-                lista_contratti.extend(self._lista_contratti[allenatore])
+            for contratto in self._lista_contratti[allenatore]:
+                lista_contratti.append(contratto)
 
         return lista_contratti
 
@@ -54,7 +52,7 @@ class GestoreAllenatori:
 
         for id_allenatore in self._lista_allenatori.keys():
             if da_cercare == self._lista_allenatori[id_allenatore].__str__():
-                omonimi.append(id_allenatore)
+                omonimi.append(self._lista_allenatori[id_allenatore])
 
         if not omonimi:
             return None

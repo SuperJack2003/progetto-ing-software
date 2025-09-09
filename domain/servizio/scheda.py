@@ -1,7 +1,16 @@
 import datetime
 
 class Scheda:
+
     _contatore_id = 0
+
+    @classmethod
+    def get_last_id(cls):
+        return cls._contatore_id
+
+    @classmethod
+    def set_last_id(cls, last_id: int):
+        cls._contatore_id = last_id
 
     @classmethod
     def _assegna_id(cls):

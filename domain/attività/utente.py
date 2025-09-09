@@ -9,6 +9,14 @@ class Utente(ABC):
     _contatore_id = 0
 
     @classmethod
+    def get_last_id(cls):
+        return cls._contatore_id
+
+    @classmethod
+    def set_last_id(cls, last_id: int):
+        cls._contatore_id = last_id
+
+    @classmethod
     def _assegna_id(cls):
         cls._contatore_id += 1
         return cls._contatore_id
@@ -20,7 +28,7 @@ class Utente(ABC):
         self._nome = nome
         self._cognome = cognome
         self._sesso = sesso
-        self._nascita = datetime.datetime.fromisoformat(nascita)
+        self._nascita = datetime.date.fromisoformat(nascita)
         self._codice_fiscale = codice_fiscale
         self._indirizzo = Indirizzo(via, civico, provincia, citta, cap)
         self._telefono = telefono
