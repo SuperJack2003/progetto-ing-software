@@ -3,46 +3,34 @@ from domain.attività.atleta import Atleta
 class GestoreAtleti:
 
     def __init__(self):
-        self._lista_atleti = {}
+        self._atleti_per_id = {}
 
     def get_lista_atleti(self):
-        lista_atleti = []
-
-        for id_atleta in self._lista_atleti.keys():
-            lista_atleti.append(self._lista_atleti[id_atleta])
-
-        return lista_atleti
+        return list(self._atleti_per_id.values())
 
     def get_atleta_per_id(self, id_da_cercare: int):
-        return self._lista_atleti[id_da_cercare]
+        return self._atleti_per_id[id_da_cercare] if id_da_cercare in self._atleti_per_id.keys() else None
 
-    def get_atleta_da_nome(self, nome_da_cercare: str):
-        omonimi = []
-
-        for id_atleta in self._lista_atleti.keys():
-            if nome_da_cercare == self._lista_atleti[id_atleta].__str__():
-                omonimi.append(self._lista_atleti[id_atleta])
-
-        if omonimi:
-            return omonimi
-        return None
+    def get_atleta_per_nome(self, nome_da_cercare: str):
+        omonimi = [
+            atleta for atleta in self._atleti_per_id.values() if nome_da_cercare == f"{atleta.get_nome()} {atleta.get_cognome()}"
+        ]
+        return omonimi
 
     def controllo_email(self, email: str):
-        for id_atleta in self._lista_atleti.keys():
-            if email == self._lista_atleti[id_atleta].get_email():
+        for atleta in self._atleti_per_id.values():
+            if email == atleta.get_email():
                 return True
         return False
 
     def controllo_tel(self, tel: str):
-        for id_atleta in self._lista_atleti.keys():
-            if tel == self._lista_atleti[id_atleta].get_telefono():
+        for atleta in self._atleti_per_id.values():
+            if tel == atleta.get_telefono():
                 return True
         return False
 
-    def set_lista_atleti(self, lista_atleti: list[Atleta]):
-        for atleta in lista_atleti:
-            if atleta.get_id() not in self._lista_atleti.keys():
-                self._lista_atleti.update({atleta.get_id(): atleta})
+    def carica_atleti(self, lista_atleti: list[Atleta]):
+        self._atleti_per_id = {atleta.get_id(): atleta for atleta in lista_atleti}
 
     def aggiungi_atleta(self, nome: str, cognome: str, sesso: chr, nascita: str,
                  codice_fiscale: str = None, via: str= None, civico: int= None,
@@ -51,7 +39,7 @@ class GestoreAtleti:
 
         if not self.controllo_email(email) and not self.controllo_tel(telefono):
             atleta = Atleta(nome, cognome, sesso, nascita, codice_fiscale, via, civico,citta, provincia, cap, telefono, email)
-            self._lista_atleti.update({atleta.get_id(): atleta})
-            return True
+            self._atleti_per_id.update({atleta.get_id(): atleta})
+            return atleta
 
-        return False
+        return None

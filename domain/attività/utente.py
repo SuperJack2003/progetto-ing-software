@@ -36,8 +36,11 @@ class Utente(ABC):
         self._id = Utente._assegna_id()
         self._lista_notifiche = []
 
-    def __str__(self):
-        return f"{self._nome} {self._cognome}"
+    def get_nome(self):
+        return self._nome
+
+    def get_cognome(self):
+        return self._cognome
 
     def get_eta(self):
         eta = datetime.date.today().year - self._nascita.year
@@ -57,6 +60,9 @@ class Utente(ABC):
 
     def aggiungi_notifica(self, notifica: Notifica):
         self._lista_notifiche.append(notifica)
+
+    def __str__(self):
+        return f"{self._nome} {self._cognome}"
 
     @abstractmethod
     def get_ruolo(self):

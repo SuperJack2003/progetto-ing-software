@@ -50,7 +50,7 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             lista_allenatori = lista_utenti["allenatori"]
 
             #Caricamento Utenti
-            gestore_atleti.set_lista_atleti(lista_atleti)
+            gestore_atleti.carica_atleti(lista_atleti)
             gestore_allenatori.set_lista_allenatori(lista_allenatori)
 
     except FileNotFoundError:
