@@ -9,10 +9,10 @@ class ContrattoAtletaAllenatore(Contratto):
         self._id_allenatore = id_allenatore
         self._data_inizio = data
 
-    def get_allenatore(self):
+    def get_id_allenatore(self):
         return self._id_allenatore
 
-    def get_atleta(self):
+    def get_id_atleta(self):
         return self._id_atleta
 
     def get_data(self):

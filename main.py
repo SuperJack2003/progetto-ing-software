@@ -18,13 +18,12 @@ from domain.servizio.scheda import Scheda
 def main():
 
     gestore_atleti = GestoreAtleti()
-    gestore_allenatori = GestoreAllenatori()
+    gestore_allenatori = GestoreAllenatori(gestore_atleti)
     gestore_abbonamenti = GestoreAbbonamenti()
     gestore_corsi = GestoreCorsi()
     gestore_schede = GestoreSchede()
     gestore_notifiche = GestoreNotifiche()
 
-    gestore_allenatori.set_gestori(gestore_atleti)
     gestore_abbonamenti.set_gestori(gestore_atleti)
     gestore_corsi.set_gestori(gestore_atleti, gestore_allenatori)
     gestore_schede.set_gestori(gestore_atleti, gestore_allenatori, gestore_abbonamenti)

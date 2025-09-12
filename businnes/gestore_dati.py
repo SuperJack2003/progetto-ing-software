@@ -51,7 +51,7 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
 
             #Caricamento Utenti
             gestore_atleti.carica_atleti(lista_atleti)
-            gestore_allenatori.set_lista_allenatori(lista_allenatori)
+            gestore_allenatori.carica_allenatori(lista_allenatori)
 
     except FileNotFoundError:
         print(f"File {file_utenti} non trovato")
@@ -132,7 +132,7 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             lista_contratti_allenatore_atleta = lista_contratti["contratti_allenatore_atleta"]
 
             #Caricamento Contratti Allenatori
-            gestore_allenatori.set_lista_contratti(lista_contratti_allenatore_atleta)
+            gestore_allenatori.carica_contratti(lista_contratti_allenatore_atleta)
 
             #Caricamento Contratti Abbonamenti
             gestore_abbonamenti.set_lista_contratti(lista_contratti_abbonamento)
