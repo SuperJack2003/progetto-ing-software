@@ -10,7 +10,7 @@ class GestoreAtleti:
         return list(self._atleti_per_id.values())
 
     def get_atleta_per_id(self, id_da_cercare: int):
-        return self._atleti_per_id.get(id_da_cercare) if id_da_cercare in self._atleti_per_id.keys() else None
+        return self._atleti_per_id.get(id_da_cercare)
 
     def get_atleta_per_nome(self, nome_da_cercare: str):
         omonimi = [

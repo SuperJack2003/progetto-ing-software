@@ -14,7 +14,7 @@ class ContrattoAbbonamento(Contratto):
         self._durata = durata
         self._scadenza = self._data_inizio + relativedelta(months=durata)
 
-    def get_atleta(self):
+    def get_id_atleta(self):
         return self._atleta
 
     def get_abbonamento(self):

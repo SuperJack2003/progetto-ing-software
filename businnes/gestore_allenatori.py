@@ -22,10 +22,10 @@ class GestoreAllenatori:
         return list(self._contratti_per_id.values())
 
     def get_allenatore_per_id(self, da_cercare: int):
-        return self._allenatori_per_id.get(da_cercare) if da_cercare in self._allenatori_per_id.keys() else None
+        return self._allenatori_per_id.get(da_cercare)
 
     def get_contratto_per_id(self, id_contratto: int):
-        return self._contratti_per_id.get(id_contratto) if id_contratto in self._contratti_per_id.keys() else None
+        return self._contratti_per_id.get(id_contratto)
 
     def get_contratti_allenatore(self, id_allenatore: int):
         contratti_allenatore = [
