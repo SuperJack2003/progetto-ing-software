@@ -58,8 +58,8 @@ class Utente(ABC):
     def get_email(self):
         return self._email
 
-    def aggiungi_notifica(self, notifica: Notifica):
-        self._lista_notifiche.append(notifica)
+    def aggiungi_notifica(self, id_notifica: int):
+        self._lista_notifiche.append(id_notifica)
 
     def __str__(self):
         return f"{self._nome} {self._cognome}"

@@ -1,85 +1,54 @@
 import datetime
+from typing import Optional
 
 from domain.servizio.notifica import Notifica
+from domain.attività.utente import Utente
 
 from businnes.gestore_atleti import GestoreAtleti
 from businnes.gestore_allenatori import GestoreAllenatori
 
 class GestoreNotifiche:
 
-    def __init__(self):
-        self._lista_notifiche = {}
+    def __init__(self, gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllenatori):
+        self._notifiche_per_id = {}
 
-        self._gestore_atleti = None
-        self._gestore_allenatori = None
-
-    def get_lista_notifiche(self):
-        lista_notifiche = []
-
-        for destinatario in self._lista_notifiche.keys():
-            for notifica in self._lista_notifiche[destinatario]:
-                lista_notifiche.append(notifica)
-
-        return lista_notifiche
-
-    def get_notifiche_da_utente(self, id_destinatario: int):
-        destinatario = self._gestore_atleti.get_atleta_per_id(id_destinatario)
-        if destinatario is None:
-            destinatario = self._gestore_allenatori.get_allenatore_per_id(id_destinatario)
-        if destinatario is None:
-            return None
-        lista_notifiche = []
-        if destinatario.get_id() in self._lista_notifiche.keys():
-            for notifica in self._lista_notifiche[destinatario.get_id()]:
-                lista_notifiche.append(notifica)
-        return lista_notifiche
-
-    def get_notifica(self, id_notifica: int):
-        for destinatario in self._lista_notifiche.keys():
-            for notifica in self._lista_notifiche[destinatario]:
-                if notifica.get_id() == id_notifica:
-                    return notifica
-        return None
-
-    def set_gestori(self, gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllenatori):
         self._gestore_atleti = gestore_atleti
         self._gestore_allenatori = gestore_allenatori
 
-    def set_lista_notifiche(self, lista_notifiche: list[Notifica]):
-        for notifica in lista_notifiche:
-            destinatario = self._gestore_atleti.get_atleta_per_id(notifica.get_id_destinatario())
-            if destinatario is None:
-                destinatario = self._gestore_allenatori.get_allenatore_per_id(notifica.get_id_destinatario())
-            if destinatario is None:
-                continue
-
-            if destinatario in self._lista_notifiche.keys():
-                self._lista_notifiche[destinatario].append(notifica)
-            else:
-                self._lista_notifiche.update({destinatario: [notifica]})
-
-            destinatario.aggiungi_notifica(notifica.get_id())
-
-    def invia_notifica(self, id_destinatario: int, nome_notifica: str, testo: str):
-        for destinatario in self._lista_notifiche.keys():
-            for notifica in self._lista_notifiche[destinatario]:
-                if notifica.get_nome() == nome_notifica:
-                    return False
-
+    def _trova_destinatario(self, id_destinatario: int) -> Optional[Utente]:
         destinatario = self._gestore_atleti.get_atleta_per_id(id_destinatario)
         if destinatario is None:
             destinatario = self._gestore_allenatori.get_allenatore_per_id(id_destinatario)
 
-        if destinatario is None:
-            return False
+        return destinatario
 
-        nuova_notifica = Notifica(nome_notifica, testo, id_destinatario, datetime.date.today())
+    def get_lista_notifiche(self):
+        return list(self._notifiche_per_id.values())
 
-        if destinatario in self._lista_notifiche.keys():
-            self._lista_notifiche[destinatario].append(nuova_notifica)
-        else:
-            self._lista_notifiche.update({destinatario: [nuova_notifica]})
+    def get_notifiche_da_utente(self, id_destinatario: int) -> Optional[list[Notifica]]:
+        destinatario = self._trova_destinatario(id_destinatario)
+        if destinatario:
+            return [notifica for notifica in self._notifiche_per_id.values() if notifica.get_id_destinatario() == id_destinatario]
+        else: return []
 
+    def get_notifica(self, id_notifica: int):
+        return self._notifiche_per_id.get(id_notifica)
+
+    def carica_notifiche(self, lista_notifiche: list[Notifica]):
+        self._notifiche_per_id = {notifica.get_id(): notifica for notifica in lista_notifiche}
+
+    def invia_notifica(self, id_destinatario: int, nome_notifica: str, testo: str, data_opzionale: Optional[datetime.date] = None) -> Optional[Notifica]:
+        for notifica in self._notifiche_per_id.values():
+            if notifica.get_nome() == nome_notifica and notifica.get_id_destinatario() == id_destinatario:
+                return None
+
+        destinatario = self._trova_destinatario(id_destinatario)
+        if not destinatario:
+            return None
+
+        data_inizio = data_opzionale if data_opzionale is not None else datetime.date.today()
+        nuova_notifica = Notifica(nome_notifica, testo, id_destinatario, data_inizio)
+        self._notifiche_per_id.update({nuova_notifica.get_id(): nuova_notifica})
         destinatario.aggiungi_notifica(nuova_notifica.get_id())
 
-        return True
+        return nuova_notifica

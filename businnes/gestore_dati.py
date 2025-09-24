@@ -158,7 +158,7 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             lista_notifiche = pickle.load(f)
 
             #Caricamento Notifiche
-            gestore_notifiche.set_lista_notifiche(lista_notifiche)
+            gestore_notifiche.carica_notifiche(lista_notifiche)
 
     except FileNotFoundError:
         print(f"File {file_notifiche} non trovato")
