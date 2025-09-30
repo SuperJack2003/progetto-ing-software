@@ -20,11 +20,10 @@ def main():
     gestore_atleti = GestoreAtleti()
     gestore_allenatori = GestoreAllenatori(gestore_atleti)
     gestore_abbonamenti = GestoreAbbonamenti(gestore_atleti)
-    gestore_corsi = GestoreCorsi()
+    gestore_corsi = GestoreCorsi(gestore_atleti, gestore_allenatori)
     gestore_schede = GestoreSchede()
     gestore_notifiche = GestoreNotifiche(gestore_atleti, gestore_allenatori)
 
-    gestore_corsi.set_gestori(gestore_atleti, gestore_allenatori)
     gestore_schede.set_gestori(gestore_atleti, gestore_allenatori, gestore_abbonamenti)
 
     dati.carica_dati(gestore_atleti, gestore_allenatori, gestore_abbonamenti, gestore_corsi, gestore_schede, gestore_notifiche)

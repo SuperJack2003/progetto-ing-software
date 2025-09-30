@@ -1,8 +1,13 @@
 import unittest
 from unittest.mock import Mock
 
+from domain.attività.atleta import Atleta
+from domain.attività.allenatore import Allenatore
+
 from domain.servizio.notifica import Notifica
 
+from businnes.gestore_atleti import GestoreAtleti
+from businnes.gestore_allenatori import GestoreAllenatori
 from businnes.gestore_notifiche import GestoreNotifiche
 
 def _crea_dati_notifica(**overrides):
@@ -17,14 +22,14 @@ class TestGestoreNotifiche(unittest.TestCase):
     def setUp(self):
         Notifica.set_last_id(0)
 
-        self._gestore_allenatori = Mock()
-        self._gestore_atleti =  Mock()
+        self._gestore_atleti = Mock(spec=GestoreAtleti)
+        self._gestore_allenatori = Mock(spec=GestoreAllenatori)
         self._gestore_notifiche = GestoreNotifiche(self._gestore_atleti, self._gestore_allenatori)
 
     def test_invia_notifica_atleta_successo(self):
         dati_notifica = _crea_dati_notifica()
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         nuova_notifica = self._gestore_notifiche.invia_notifica(1, **dati_notifica)
@@ -43,7 +48,7 @@ class TestGestoreNotifiche(unittest.TestCase):
     def test_invia_notifica_allenatore_successo(self):
         dati_notifica = _crea_dati_notifica()
 
-        allenatore = Mock()
+        allenatore = Mock(spec=Allenatore)
         self._gestore_atleti.get_atleta_per_id.return_value = None
         self._gestore_allenatori.get_allenatore_per_id.return_value = allenatore
 
@@ -63,7 +68,7 @@ class TestGestoreNotifiche(unittest.TestCase):
     def test_invia_notifica_gia_esistente(self):
         dati_notifica = _crea_dati_notifica()
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         notifica1 = self._gestore_notifiche.invia_notifica(1, **dati_notifica)
@@ -89,7 +94,7 @@ class TestGestoreNotifiche(unittest.TestCase):
         dati_notifica1 = _crea_dati_notifica()
         dati_notifica2 = _crea_dati_notifica(nome_notifica="Avviso cancellazione corso: Karate")
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         notifica1 = self._gestore_notifiche.invia_notifica(1, **dati_notifica1)
@@ -106,7 +111,7 @@ class TestGestoreNotifiche(unittest.TestCase):
     def test_get_notifiche_da_utente_nessuna_notifica(self):
         dati_notifica = _crea_dati_notifica()
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         nuova_notifica = self._gestore_notifiche.invia_notifica(1, **dati_notifica)
@@ -119,7 +124,7 @@ class TestGestoreNotifiche(unittest.TestCase):
         dati_notifica1 = _crea_dati_notifica()
         dati_notifica2 = _crea_dati_notifica(nome_notifica="Avviso cancellazione corso: Karate")
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         notifica1 = self._gestore_notifiche.invia_notifica(1, **dati_notifica1)

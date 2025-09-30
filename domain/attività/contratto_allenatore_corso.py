@@ -9,10 +9,10 @@ class ContrattoAllenatoreCorso(Contratto):
         self._id_corso = id_corso
         self._data = data
 
-    def get_allenatore(self):
+    def get_id_allenatore(self):
         return self._id_allenatore
 
-    def get_corso(self):
+    def get_id_corso(self):
         return self._id_corso
 
     def get_data(self):

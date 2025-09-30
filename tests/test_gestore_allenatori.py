@@ -1,9 +1,12 @@
 import unittest
 from unittest.mock import Mock
 
-from businnes.gestore_allenatori import GestoreAllenatori
 from domain.attività.utente import Utente
+from domain.attività.atleta import Atleta
 from domain.attività.contratto import Contratto
+
+from businnes.gestore_atleti import GestoreAtleti
+from businnes.gestore_allenatori import GestoreAllenatori
 
 def _crea_dati_allenatore_validi(**overrides):
     """
@@ -25,7 +28,7 @@ class TestGestoreAllenatori(unittest.TestCase):
         Utente.set_last_id(0)
         Contratto.set_last_id(0)
 
-        self._gestore_atleti = Mock()
+        self._gestore_atleti = Mock(spec=GestoreAtleti)
         self._gestore_allenatori = GestoreAllenatori(self._gestore_atleti)
 
         print(f"\n--- Eseguo setUp per il test:  {self.id()} ---")
@@ -109,7 +112,7 @@ class TestGestoreAllenatori(unittest.TestCase):
         allenatore = self._gestore_allenatori.aggiungi_allenatore(**dati_allenatore)
         self.assertIsNotNone(allenatore)
 
-        atleta_finto = Mock()
+        atleta_finto = Mock(spec=Atleta)
         atleta_finto.get_id.return_value = 1
         self._gestore_atleti.get_atleta_per_id.return_value = atleta_finto
 
@@ -143,7 +146,7 @@ class TestGestoreAllenatori(unittest.TestCase):
         allenatore = self._gestore_allenatori.aggiungi_allenatore(**dati_allenatore)
         self.assertIsNotNone(allenatore)
 
-        atleta_finto = Mock()
+        atleta_finto = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta_finto
         atleta_finto.get_id.return_value = 1
 
@@ -155,7 +158,7 @@ class TestGestoreAllenatori(unittest.TestCase):
         allenatore = self._gestore_allenatori.aggiungi_allenatore(**dati_allenatore)
         self.assertIsNotNone(allenatore)
 
-        atleta_finto = Mock()
+        atleta_finto = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta_finto
         atleta_finto.get_id.return_value = 1
 

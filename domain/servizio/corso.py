@@ -1,3 +1,5 @@
+from domain.value_objects.programmazione import ProgrammazioneSettimanale
+
 class Corso:
     _contatore_id = 0
 
@@ -14,19 +16,14 @@ class Corso:
         cls._contatore_id += 1
         return cls._contatore_id
 
-    def __init__(self, nome: str, descrizione: str, eta_min: int, eta_max: int, orario_corso: str):
+    def __init__(self, nome: str, descrizione: str, eta_min: int, eta_max: int, orari_corso: str):
         self._nome = nome
         self._descrizione = descrizione
         self._eta_min = eta_min
         self._eta_max = eta_max
-        self._orario_corso = orario_corso
+        self._programmazione_settimanale = ProgrammazioneSettimanale.from_string(orari_corso)
         self._stato = True
-        self._lista_iscrizioni = []
-        self._id_contratto_allenatore = None
         self._id = Corso.assegna_id()
-
-    def get_lista_iscrizioni(self):
-        return self._lista_iscrizioni
 
     def get_nome(self):
         return self._nome
@@ -43,26 +40,17 @@ class Corso:
     def get_eta_max(self):
         return self._eta_max
 
-    def get_orario_corso(self):
-        return self._orario_corso
+    def get_programmazione_settimanale(self) -> ProgrammazioneSettimanale:
+        return self._programmazione_settimanale
 
     def get_stato(self):
         return self._stato
 
-    def get_contratto_allenatore(self):
-        return self._id_contratto_allenatore
-
     def get_id(self):
         return self._id
 
-    def aggiungi_iscritto(self, id_iscrizione: int):
-        self._lista_iscrizioni.append(id_iscrizione)
-
-    def assegna_allenatore(self, id_contratto_allenatore: int):
-        self._id_contratto_allenatore = id_contratto_allenatore
-
     def set_orario_corso(self, orario_corso: str):
-        self._orario_corso = orario_corso
+        self._programmazione_settimanale = ProgrammazioneSettimanale.from_string(orario_corso)
 
-    def set_status(self, status: bool):
-        self._stato = status
+    def set_stato(self, stato: bool):
+        self._stato = stato

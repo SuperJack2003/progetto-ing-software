@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from ..value_objects import Indirizzo
+from ..value_objects.indirizzo import Indirizzo
 import datetime
 
 from domain.servizio.notifica import Notifica

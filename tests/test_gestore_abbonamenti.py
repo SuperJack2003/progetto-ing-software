@@ -3,9 +3,13 @@ from unittest.mock import Mock
 import datetime
 from dateutil import relativedelta
 
-from businnes.gestore_abbonamenti import GestoreAbbonamenti
-from domain.servizio.abbonamento import Abbonamento
 from domain.attività.contratto import Contratto
+from domain.attività.atleta import Atleta
+
+from domain.servizio.abbonamento import Abbonamento
+
+from businnes.gestore_atleti import GestoreAtleti
+from businnes.gestore_abbonamenti import GestoreAbbonamenti
 
 def _crea_dati_abbonamento(**overrides):
     dati_default = {
@@ -20,7 +24,7 @@ class TestGestoreAbbonamenti(unittest.TestCase):
         Abbonamento.set_last_id(0)
         Contratto.set_last_id(0)
 
-        self._gestore_atleti = Mock()
+        self._gestore_atleti = Mock(spec=GestoreAtleti)
         self._gestore_abbonamenti = GestoreAbbonamenti(self._gestore_atleti)
 
         print(f"\n--- Eseguo setUp per il test:  {self.id()} ---")
@@ -89,13 +93,13 @@ class TestGestoreAbbonamenti(unittest.TestCase):
         abbonamento = self._gestore_abbonamenti.crea_abbonamento(**dati_abbonamento)
         self.assertIsNotNone(abbonamento)
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         contratto = self._gestore_abbonamenti.crea_contratto(1, 1)
         self.assertIsNotNone(contratto)
         self.assertEqual(contratto.get_id(), 1)
-        self.assertEqual(contratto.get_abbonamento(), 1)
+        self.assertEqual(contratto.get_id_abbonamento(), 1)
         self._gestore_atleti.get_atleta_per_id.assert_called_once_with(1)
         atleta.assegna_abbonamento.assert_called_once_with(contratto.get_id())
 
@@ -122,7 +126,7 @@ class TestGestoreAbbonamenti(unittest.TestCase):
         abbonamento = self._gestore_abbonamenti.crea_abbonamento(**dati_abbonamento)
         self.assertIsNotNone(abbonamento)
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         contratto = self._gestore_abbonamenti.crea_contratto(1, 3)
@@ -136,7 +140,7 @@ class TestGestoreAbbonamenti(unittest.TestCase):
         abbonamento = self._gestore_abbonamenti.crea_abbonamento(**dati_abbonamento)
         self.assertIsNotNone(abbonamento)
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         contratto1 = self._gestore_abbonamenti.crea_contratto(1, 1)
@@ -154,7 +158,7 @@ class TestGestoreAbbonamenti(unittest.TestCase):
         abbonamento = self._gestore_abbonamenti.crea_abbonamento(**dati_abbonamento)
         self.assertIsNotNone(abbonamento)
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         contratto = self._gestore_abbonamenti.crea_contratto(1, 1)
@@ -168,7 +172,7 @@ class TestGestoreAbbonamenti(unittest.TestCase):
         abbonamento = self._gestore_abbonamenti.crea_abbonamento(**dati_abbonamento)
         self.assertIsNotNone(abbonamento)
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         contratto = self._gestore_abbonamenti.crea_contratto(1, 1)
@@ -183,7 +187,7 @@ class TestGestoreAbbonamenti(unittest.TestCase):
         abbonamento = self._gestore_abbonamenti.crea_abbonamento(**dati_abbonamento)
         self.assertIsNotNone(abbonamento)
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         contratto = self._gestore_abbonamenti.crea_contratto(1, 1)
@@ -197,7 +201,7 @@ class TestGestoreAbbonamenti(unittest.TestCase):
         abbonamento = self._gestore_abbonamenti.crea_abbonamento(**dati_abbonamento)
         self.assertIsNotNone(abbonamento)
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         contratto = self._gestore_abbonamenti.crea_contratto(1, 1)
@@ -212,7 +216,7 @@ class TestGestoreAbbonamenti(unittest.TestCase):
         abbonamento = self._gestore_abbonamenti.crea_abbonamento(**dati_abbonamento)
         self.assertIsNotNone(abbonamento)
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         contratto = self._gestore_abbonamenti.crea_contratto(1, 1)
@@ -230,7 +234,7 @@ class TestGestoreAbbonamenti(unittest.TestCase):
         abbonamento2 = self._gestore_abbonamenti.crea_abbonamento(**dati_abbonamento2)
         self.assertIsNotNone(abbonamento2)
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         data_contratto1 = (datetime.date.today() + datetime.timedelta(days=1)) - relativedelta.relativedelta(months=1)
@@ -253,7 +257,7 @@ class TestGestoreAbbonamenti(unittest.TestCase):
         abbonamento2 = self._gestore_abbonamenti.crea_abbonamento(**dati_abbonamento2)
         self.assertIsNotNone(abbonamento2)
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         contratto1 = self._gestore_abbonamenti.crea_contratto(1, 1)
@@ -276,7 +280,7 @@ class TestGestoreAbbonamenti(unittest.TestCase):
         abbonamento = self._gestore_abbonamenti.crea_abbonamento(**dati_abbonamento)
         self.assertIsNotNone(abbonamento)
 
-        atleta = Mock()
+        atleta = Mock(spec=Atleta)
         self._gestore_atleti.get_atleta_per_id.return_value = atleta
 
         contratto1 = self._gestore_abbonamenti.crea_contratto(1, 1, datetime.date.fromisoformat("2025-07-01"))

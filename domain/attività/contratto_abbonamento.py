@@ -17,7 +17,7 @@ class ContrattoAbbonamento(Contratto):
     def get_id_atleta(self):
         return self._atleta
 
-    def get_abbonamento(self):
+    def get_id_abbonamento(self):
         return self._abbonamento
 
     def get_tipologia(self):

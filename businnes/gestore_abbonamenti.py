@@ -70,7 +70,7 @@ class GestoreAbbonamenti:
             return None
 
         for contratto in self._contratti_per_id.values():
-            if contratto.get_id_atleta() == id_atleta and contratto.get_abbonamento() == id_abbonamento:
+            if contratto.get_id_atleta() == id_atleta and contratto.get_id_abbonamento() == id_abbonamento:
                 return None
 
         abbonamento = self._abbonamenti_per_id.get(id_abbonamento)

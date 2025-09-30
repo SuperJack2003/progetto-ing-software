@@ -10,10 +10,10 @@ class ContrattoAtletaCorso(Contratto):
         self.presenze = 0
         self._data_inizio = data
 
-    def get_atleta(self):
+    def get_id_atleta(self):
         return self._id_atleta
 
-    def get_corso(self):
+    def get_id_corso(self):
         return self._id_corso
 
     def segna_presenza(self):

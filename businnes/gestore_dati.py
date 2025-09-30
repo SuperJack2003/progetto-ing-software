@@ -81,7 +81,7 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             lista_corsi = pickle.load(f)
 
             #Caricamento Corsi
-            gestore_corsi.set_lista_corsi(lista_corsi)
+            gestore_corsi.carica_corsi(lista_corsi)
 
     except FileNotFoundError:
         print(f"File {file_corsi} non trovato")
@@ -138,8 +138,8 @@ def carica_dati(gestore_atleti: GestoreAtleti, gestore_allenatori: GestoreAllena
             gestore_abbonamenti.carica_contratti(lista_contratti_abbonamento)
 
             #Caricamento Contratti Corsi
-            gestore_corsi.set_lista_contratti_allenatori(lista_contratti_allenatore_corso)
-            gestore_corsi.set_lista_contratti_atleti(lista_contratti_atleta_corso)
+            gestore_corsi.carica_contratti_allenatori(lista_contratti_allenatore_corso)
+            gestore_corsi.carica_contratti_atleti(lista_contratti_atleta_corso)
 
             #Caricamento Contratti Scede
             gestore_schede.set_lista_contratti_esercizi(lista_contratti_esercizi)
